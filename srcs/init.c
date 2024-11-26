@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:24:20 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/26 19:20:59 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/26 21:31:36 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ int init_table(int argc, t_info *table, char *argv[])
     if (table->nbr_philos == 1)
     {
         table->start_time = my_getime();
-        ft_usleep()
+        printf("0 1 has taken a fork\n");
+        ft_usleep(table->time_to_die);
+        printf("%zu 1 died\n", my_getime() - table->start_time);
+        return (-1);
     }
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:10:12 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/26 19:19:16 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:47:19 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,8 @@ int	ft_usleep(size_t millisec);
 
 //my_logs.c
 size_t my_getime(void);
+
+
+//init.c
+int init_table(int argc, t_info *table, char *argv[]);
 #endif

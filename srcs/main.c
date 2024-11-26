@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:17:23 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/26 18:23:53 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/26 21:07:35 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int main(int argc, char *argv[])
     
     if (argc != 5 && argc != 6)
     {
-        ft_putstr_fd("ERROR: Wrong number of elements\n", 2);
+        printf("ERROR: Wrong number of elements\n");
         return (0); // nao podes usar o exit
     }
     initial_clean(&table);
-    // init_table(&table, argv);
+    init_table(argc, &table, argv);
         // check_args;
             // check num of philos
     // init_forks
@@ -85,7 +85,7 @@ philos = malloc(sizeof(table->philo) * table->nbr_of_philos));
 					l_forke[nrb_philos];
 
 [] init_threads; //? dentro do create philos? //
-	[] create routine function //* in philo_utils.c
+	[] create routine function // in philo_utils.c
 		? What each philosopher has to do ? In which order ?
 		[] consider:
 			[] impar and par

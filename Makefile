@@ -5,11 +5,11 @@ RM				=	rm -rf
 
 INC_DIR			=	includes/
 OBJ_DIR			=	objs/
-SRC_DIR			=	sources/
+SRC_DIR			=	srcs/
 
 SRC				=	$(SRC_DIR)main.c \
+					$(SRC_DIR)init.c \
 					$(SRC_DIR)utils.c \
-					$(SRC_DIR)logs.c \
 
 OBJ				=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o) 
 
