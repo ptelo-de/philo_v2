@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:26:28 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/25 22:42:34 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:18:38 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,13 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (NULL);
 	memset(array, 0, max);
 	return (array);
+}
+int	ft_usleep(size_t millisec)
+{
+	size_t	start;
+
+	start = my_getime();
+	while ((my_getime() - start) < millisec) 
+		usleep(500);
+	return (0);
 }
