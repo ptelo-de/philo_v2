@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:17:23 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 19:37:14 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:53:25 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ void    initial_clean(t_info *table)
     table->time_to_think = 0;
     table->monitor_id = 0;
     table->Discontinue = 0;
+}
+
+void logs()
+{
+	//protect printfs in case of exterminate
+	//plus print death message
+	
 }
 
 int check_args(int argc, char *argv[])

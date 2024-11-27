@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:36:55 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 20:02:35 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:52:39 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void    *philo_routine(t_philo *philo)
         if (philo->table->Discontinue)
         {
             pthread_mutex_unlock(&philo->table->checker); 
-            return(philo);
+            return(NULL);
         }
         pthread_mutex_unlock(&philo->table->checker);
         safe_fork_lock(philo);
@@ -70,13 +70,42 @@ void    *philo_routine(t_philo *philo)
     }
     return (NULL);
 }
-
-void    *monitor_routine(t_info *table)
+int check_all_eaten(int all_eaten, t_info *table)
 {
-    //pthread_mutex_lock(philos->info->monitor);
-	pthread_mutex_unlock(&table->checker);
-    while (1)
+        if (all_eaten == table->nbr_of_meals)
+        {
+            table->Discontinue = 1;
+            pthread_mutex_unlock(&table->checker);
+            return (1);
+        }
+        return (0);
+    
+}
+void    *monitor_routine(t_info *table) //check with margarida
+{
+    int i;
+    int all_eaten;
+
+    all_eaten = 0;
+    while (!table->Discontinue)
     {
-        
+        i = 0;
+        pthread_mutex_lock(&table->checker);
+        while (i < table->nbr_philos)
+        {
+            if (table->philos[i].time_last_meal >= table->time_to_die)
+            {
+                table->Discontinue = 1;
+                pthread_mutex_unlock(&table->checker);
+                return (NULL);
+            }
+            if (table->philos[i].meals_eaten == table->nbr_of_meals)
+                all_eaten++;
+            i++;  
+        }  
+        if (check_all_eaten(all_eaten, table))
+            return (NULL);
+        pthread_mutex_unlock(&table->checker);
     }
+    return (NULL);
 }
