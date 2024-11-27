@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:24:20 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 19:30:01 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:58:22 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,14 @@ int init_thread(t_info *table)
     int i;
 
     i = 0;
-    //pthread_mutex_lock(table->checker);
+    unsigned int test;
+    pthread_mutex_lock(&table->checker);
     table->start_time = my_getime();
     while (i < table->nbr_philos)
     {
-        if (pthread_create(&table->philos[i].theread_id, NULL, &philo_routine, (void *)(&table->philos[i])) != 0) 
+        test = pthread_create(&table->philos[i].theread_id, NULL, &philo_routine, (void *)(&table->philos[i]));
+        printf("thread create: %p\n", test);
+        if (test != 0) 
         {
             free_table(table);
             return (1);
@@ -136,7 +139,7 @@ int init_thread(t_info *table)
         free_table(table);
         return (1);
     }
-    //pthread_mutex_lock(table->checker);
+    pthread_mutex_lock(&table->checker);
     while (i < table->nbr_philos)
     {
 		if(pthread_join(table->philos[i].theread_id, NULL) != 0) //evita zombie threads

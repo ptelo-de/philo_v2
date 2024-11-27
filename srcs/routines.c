@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:36:55 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 18:30:44 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:02:35 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ void    *philo_routine(t_philo *philo)
 {
     while (1)
     {
+        pthread_mutex_lock(&philo->table->checker);
+        if (philo->table->Discontinue)
+        {
+            pthread_mutex_unlock(&philo->table->checker); 
+            return(philo);
+        }
+        pthread_mutex_unlock(&philo->table->checker);
         safe_fork_lock(philo);
         printf("%d %d is eating\n", my_getime() - philo->table->start_time, philo->id);
         philo->time_last_meal = my_getime() - philo->table->start_time - philo->time_last_meal;
@@ -66,6 +73,8 @@ void    *philo_routine(t_philo *philo)
 
 void    *monitor_routine(t_info *table)
 {
+    //pthread_mutex_lock(philos->info->monitor);
+	pthread_mutex_unlock(&table->checker);
     while (1)
     {
         
