@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:10:12 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 16:46:14 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:20:58 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ typedef struct s_info
 	int				time_to_sleep;
 	int				time_to_think;
 	int				nbr_of_meals;
-	int				died;  // TODO ou passar para int;
-	int				all_eaten;
 	t_philo			*philos;
 	pthread_mutex_t	*forks; // mesmo numero que philos
+	int				Discontinue;
 	pthread_t		monitor_id;
+	pthread_mutex_t	checker;
 }               t_info;
 
 //utils.c
@@ -67,6 +67,10 @@ size_t my_getime(void);
 int init_table(int argc, t_info *table, char *argv[]);
 int forks_init(t_info *table);
 int create_philos(t_info    *table);
+
+//routines.c
+void    *philo_routine(t_philo *philo);
+void    *monitor_routine(t_info *table);
 
 //main.c
 int check_args(int argc, char *argv[]);

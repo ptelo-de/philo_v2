@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:17:23 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 16:47:06 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:37:14 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void    initial_clean(t_info *table)
 {
-    table->all_eaten = 0;
-    table->died = 0;
     table->forks = NULL;
     table->nbr_of_meals = 0;
     table->nbr_philos = 0;
@@ -26,6 +24,7 @@ void    initial_clean(t_info *table)
     table->time_to_sleep = 0;
     table->time_to_think = 0;
     table->monitor_id = 0;
+    table->Discontinue = 0;
 }
 
 int check_args(int argc, char *argv[])
