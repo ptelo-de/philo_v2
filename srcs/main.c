@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:17:23 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 13:28:11 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:47:06 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,49 @@ void    initial_clean(t_info *table)
     table->time_to_eat = 0;
     table->time_to_sleep = 0;
     table->time_to_think = 0;
+    table->monitor_id = 0;
 }
+
+int check_args(int argc, char *argv[])
+{
+	int i;
+	int j;
+	
+	i = 1;
+	while (i < argc)
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (argv[i][j] >= '0' && argv[i][j] <= '9') 
+				j++;
+			else
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int main(int argc, char *argv[])
 {
     t_info table; 
-
-    (void)argv;
-    
+ 
     if (argc != 5 && argc != 6)
     {
         printf("ERROR: Wrong number of elements\n");
         return (0); // nao podes usar o exit
     }
     initial_clean(&table);
-    if (init_table(argc, &table, argv) || forks_init(&table))
+    if (init_table(argc, &table, argv))
             return (1);
 
-    if (create_philos(&table))
+    if (forks_init(&table) || create_philos(&table))
+    {
+        free_table(&table);
         return (1);
+    }
+    free_table(&table);
     // philos = malloc(sizeof(table->philo) * table->nbr_of_philos)); // dentro do create philos
     // create_philos(table);   
     // init_threads

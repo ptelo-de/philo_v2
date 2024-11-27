@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:26:28 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/26 21:19:35 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:31:28 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,33 @@ size_t my_getime(void)
 
     gettimeofday(&tv, NULL);
     return((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void	free_table(t_info	*table)
+{
+    int i;
+
+
+    if (table->philos)
+    {
+    	i = 0;
+		while (i < table->nbr_philos)
+		{
+			table->philos[i].fork_one = NULL;
+			table->philos[i].fork_two = NULL;
+			table->philos[i].table = NULL;
+			i++;
+		}
+        free(table->philos);
+        table->philos = NULL;
+    }
+    i = 0;
+    if (table->forks) {
+        while (i < table->nbr_philos) {
+            pthread_mutex_destroy(&table->forks[i]);
+            i++;
+        }
+        free(table->forks);
+        table->forks = NULL;
+    }
 }

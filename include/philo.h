@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:10:12 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 12:03:56 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:46:14 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ typedef struct s_info
 	int				all_eaten;
 	t_philo			*philos;
 	pthread_mutex_t	*forks; // mesmo numero que philos
+	pthread_t		monitor_id;
 }               t_info;
 
 //utils.c
 void	*ft_calloc(size_t nmemb, size_t size);
 int	ft_atoi(const char *nptr);
 int	ft_usleep(size_t millisec);
-
-//my_logs.c
+void	free_table(t_info	*table);
 size_t my_getime(void);
 
 
@@ -67,4 +67,7 @@ size_t my_getime(void);
 int init_table(int argc, t_info *table, char *argv[]);
 int forks_init(t_info *table);
 int create_philos(t_info    *table);
+
+//main.c
+int check_args(int argc, char *argv[]);
 #endif

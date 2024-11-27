@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:24:20 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 14:28:28 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:47:46 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,14 @@ void fork_assigment(t_info *table)
 {
 	int i;
 
-	i = 0;
-	while (i < table->nbr_philos)
+	table->philos[0].fork_one = &table->forks[0];
+	table->philos[0].fork_two = &table->forks[table->nbr_philos - 1];
+	table->philos[table->nbr_philos - 1].fork_one = &table->forks[i - 1];
+	table->philos[table->nbr_philos - 1].fork_two = &table->forks[i];
+	i = 1;
+	while (i < (table->nbr_philos - 1))
 	{
-		if (i == 0)
-		{
-			table->philos[i].fork_one = &table->forks[0];
-			table->philos[i].fork_two = &table->forks[table->nbr_philos - 1];
-
-		}
-		else if (i == table->nbr_philos - 1)
-		{
-			table->philos[i].fork_one = &table->forks[i - 1];
-			table->philos[i].fork_two = &table->forks[i];
-
-		}
-		else if (i % 2 != 0)
+		if (i % 2 != 0)
 		{
 			table->philos[i].fork_one = &table->forks[i - 1];
 			table->philos[i].fork_two = &table->forks[i];
@@ -50,7 +42,7 @@ int init_table(int argc, t_info *table, char *argv[])
     table->time_to_die = ft_atoi(argv[2]);
     table->time_to_eat = ft_atoi(argv[3]);
     table->time_to_sleep = ft_atoi(argv[4]);
-    if (table->nbr_philos <=0 || table->time_to_die <=0
+    if (check_args(argc, argv) ||table->nbr_philos <=0 || table->time_to_die <=0
        || table->time_to_eat < 0 || table->time_to_sleep < 0)
         return (1);
     if (argc == 6)
@@ -63,7 +55,7 @@ int init_table(int argc, t_info *table, char *argv[])
     {
         table->start_time = my_getime();
         ft_usleep(table->time_to_die);
-        printf("0 1 has taken a fork\n\n%d 1 died\n", table->time_to_die);
+        printf("0 1 has taken a fork\n%d 1 died\n", table->time_to_die);
         return (1);
     }
     if ( table->nbr_philos % 2 != 0)
@@ -96,7 +88,7 @@ int create_philos(t_info    *table)
 {
     int id;
 
-    table->philos = ft_calloc(table->nbr_philos, sizeof(pthread_t));
+    table->philos = ft_calloc(table->nbr_philos, sizeof(t_philo));
     if (!table->philos)
         return (1);
     id = 1;
@@ -118,4 +110,32 @@ int create_philos(t_info    *table)
     }
     fork_assigment(table);
     return (0);
+}
+
+int init_thread(t_info *table)
+{
+    int i;
+
+    table->start_time = my_getime();
+    i = 0;
+    while (i < table->nbr_philos)
+    {
+        if (pthread_create(&table->philos[i].theread_id, NULL, &philo_routine, (void *)(&table->philos[i])) != 0) 
+        {
+            free_table(table);
+            return (1);
+        }
+        i++;
+    }
+    if (pthread_create(&table->monitor_id, NULL, &monitor_routine, (void *)table) != 0)
+    {
+        free_table(table);
+        return (1);
+    }
+    
+    while (++i < table->nbr_philos)
+		pthread_join(table->philos[i].theread_id, NULL);
+    pthread_join(table->monitor_id, NULL);
+    return (0);
+    //join
 }
