@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:10:12 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/26 20:47:19 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:03:56 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_philo
 {
     int	id;
     pthread_t 			theread_id;		
-    pthread_mutex_t		*rigth_fork;
-	pthread_mutex_t		*left_fork;
+    pthread_mutex_t		*fork_one;
+	pthread_mutex_t		*fork_two;
     int 				time_last_meal;
     int					meals_eaten;
    	t_info 				*table; // TODO tirar ?
@@ -65,4 +65,6 @@ size_t my_getime(void);
 
 //init.c
 int init_table(int argc, t_info *table, char *argv[]);
+int forks_init(t_info *table);
+int create_philos(t_info    *table);
 #endif

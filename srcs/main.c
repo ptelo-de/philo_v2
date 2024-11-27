@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:17:23 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/26 21:07:35 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:28:11 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ int main(int argc, char *argv[])
         return (0); // nao podes usar o exit
     }
     initial_clean(&table);
-    init_table(argc, &table, argv);
-        // check_args;
-            // check num of philos
-    // init_forks
+    if (init_table(argc, &table, argv) || forks_init(&table))
+            return (1);
+
+    if (create_philos(&table))
+        return (1);
     // philos = malloc(sizeof(table->philo) * table->nbr_of_philos)); // dentro do create philos
     // create_philos(table);   
     // init_threads
@@ -151,5 +152,17 @@ Core concepts:
         [x] nbr_of_meals;
         [x] int died ?;
         [x] int all_eaten ;
-        
+
+0//p1 (1, 6)(fork_1, fork_2) p1.2 'e mutavel
+1//p2 (1, 2)
+2//p3 (3, 2)
+3//p4 (3, 4)
+  p5 (5, 4) 
+  p6 (5, 6) pn.2 'e mutavel'    
 */
+// 0//p1 (1, 6)(fork_1, fork_2) p1.2 'e mutavel
+// 1//p2 (2, 1)
+// 2//p3 (3, 2)
+// 3//p4 (4, 3)
+//   p5 (5, 4) 
+//   p6 (6, 5) pn.2 'e mutavel'    
