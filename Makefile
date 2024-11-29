@@ -1,6 +1,6 @@
 NAME			=	philo
 CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror -gdwarf-4 -g #-fsanitize=thread
+CFLAGS			=	-Wall -Wextra -Werror -gdwarf-4 -g -fsanitize=thread
 RM				=	rm -rf
 
 INC_DIR			=	includes/
@@ -10,6 +10,8 @@ SRC_DIR			=	srcs/
 SRC				=	$(SRC_DIR)main.c \
 					$(SRC_DIR)init.c \
 					$(SRC_DIR)utils.c \
+					$(SRC_DIR)routines.c \
+
 
 OBJ				=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o) 
 

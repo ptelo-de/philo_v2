@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:24:20 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 19:58:22 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:05:44 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void fork_assigment(t_info *table)
 
 	table->philos[0].fork_one = &table->forks[0];
 	table->philos[0].fork_two = &table->forks[table->nbr_philos - 1];
-	table->philos[table->nbr_philos - 1].fork_one = &table->forks[i - 1];
-	table->philos[table->nbr_philos - 1].fork_two = &table->forks[i];
+	table->philos[table->nbr_philos - 1].fork_one = &table->forks[table->nbr_philos - 2];
+	table->philos[table->nbr_philos - 1].fork_two = &table->forks[table->nbr_philos - 1];
 	i = 1;
 	while (i < (table->nbr_philos - 1))
 	{
@@ -124,8 +124,8 @@ int init_thread(t_info *table)
     table->start_time = my_getime();
     while (i < table->nbr_philos)
     {
-        test = pthread_create(&table->philos[i].theread_id, NULL, &philo_routine, (void *)(&table->philos[i]));
-        printf("thread create: %p\n", test);
+        test = pthread_create(&table->philos[i].theread_id, NULL, &philo_routine, &table->philos[i]);
+        printf("thread create: %u\n", test);
         if (test != 0) 
         {
             free_table(table);
@@ -133,13 +133,13 @@ int init_thread(t_info *table)
         }
         i++;
     }
-    
-    if (pthread_create(&table->monitor_id, NULL, &monitor_routine, (void *)table) != 0)
+    if (pthread_create(&table->monitor_id, NULL, &monitor_routine, table) != 0)
     {
         free_table(table);
         return (1);
     }
-    pthread_mutex_lock(&table->checker);
+    pthread_mutex_unlock(&table->checker);
+    i = 0;
     while (i < table->nbr_philos)
     {
 		if(pthread_join(table->philos[i].theread_id, NULL) != 0) //evita zombie threads

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:17:23 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 20:53:25 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:03:15 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,10 @@ int main(int argc, char *argv[])
         free_table(&table);
         return (1);
     }
+	if (init_thread(&table))
+		return(1);
     free_table(&table);
-    // philos = malloc(sizeof(table->philo) * table->nbr_of_philos)); // dentro do create philos
-    // create_philos(table);   
-    // init_threads
-    //
-    // 
+
     return (0);
 }
 

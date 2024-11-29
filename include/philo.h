@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:10:12 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 19:20:58 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:01:23 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ size_t my_getime(void);
 int init_table(int argc, t_info *table, char *argv[]);
 int forks_init(t_info *table);
 int create_philos(t_info    *table);
+int init_thread(t_info *table);
 
 //routines.c
-void    *philo_routine(t_philo *philo);
-void    *monitor_routine(t_info *table);
+void    *philo_routine(void	*arg);
+void    *monitor_routine(void	*arg);
 
 //main.c
 int check_args(int argc, char *argv[]);
