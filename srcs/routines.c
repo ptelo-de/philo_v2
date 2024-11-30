@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:36:55 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/30 19:02:11 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/30 20:54:31 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void    eat_with_forks(t_philo *philo)
 {
     if (philo->id % 2 != 0)
     {
-        usleep(1000);
         pthread_mutex_lock(philo->fork_one);
         my_log("has taken a fork", philo->id, philo->table);
         pthread_mutex_lock(philo->fork_two);
@@ -24,7 +23,6 @@ void    eat_with_forks(t_philo *philo)
     }
     else
     {
-        usleep(1000);
         pthread_mutex_lock(philo->fork_two);
         my_log("has taken a fork", philo->id, philo->table);
         pthread_mutex_lock(philo->fork_one);
@@ -81,9 +79,9 @@ void    *monitor_routine(void *arg) //check with margarida
     table = (t_info *)arg;
 
     all_eaten = 0;
-    pthread_mutex_lock(&table->checker);
     while (!table->Discontinue)
     {
+    pthread_mutex_lock(&table->checker);
         i = 0;
         while (i < table->nbr_philos)
         {
@@ -104,8 +102,8 @@ void    *monitor_routine(void *arg) //check with margarida
             pthread_mutex_unlock(&table->checker);
             return (NULL);
         }
-    }
     pthread_mutex_unlock(&table->checker);
+    }
     return (NULL);
 }
 
