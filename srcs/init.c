@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:24:20 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/29 16:05:44 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/29 18:09:23 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int init_thread(t_info *table)
 
     i = 0;
     unsigned int test;
-    pthread_mutex_lock(&table->checker);
     table->start_time = my_getime();
     while (i < table->nbr_philos)
     {
@@ -138,7 +137,6 @@ int init_thread(t_info *table)
         free_table(table);
         return (1);
     }
-    pthread_mutex_unlock(&table->checker);
     i = 0;
     while (i < table->nbr_philos)
     {

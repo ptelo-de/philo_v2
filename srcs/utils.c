@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptelo-de <ptelo-de@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:26:28 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/27 16:31:28 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:59:44 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ void	free_table(t_info	*table)
         free(table->forks);
         table->forks = NULL;
     }
+	pthread_mutex_destroy(&table->checker);
 }
