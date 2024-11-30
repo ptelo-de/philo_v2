@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:24:20 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/29 18:09:23 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/11/30 18:25:03 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,16 @@ int create_philos(t_info    *table)
     while (id <= table->nbr_philos)
     {
         table->philos[id - 1].id = id;
-        printf("id :%d\n", table->philos[id - 1].id);
+//        printf("id :%d\n", table->philos[id - 1].id);
         table->philos[id -1].meals_eaten = 0;
-        printf(" meals_eaten: %d\n", table->philos[id - 1].meals_eaten);
+//        printf(" meals_eaten: %d\n", table->philos[id - 1].meals_eaten);
         table->philos[id - 1].table = table;
-        printf(" table: %p\n", table->philos[id - 1].table);
-        printf(" orignila table: %p\n", table);
+//        printf(" table: %p\n", table->philos[id - 1].table);
+//        printf(" orignila table: %p\n", table);
         table->philos[id - 1].theread_id = 0;
-        printf(" thread id: %lu\n", table->philos[id - 1].theread_id);
+//        printf(" thread id: %lu\n", table->philos[id - 1].theread_id);
         table->philos[id - 1].time_last_meal = 0;
-        printf(" time last meal: %d\n", table->philos[id - 1].time_last_meal);
+//        printf(" time last meal: %d\n", table->philos[id - 1].time_last_meal);
         id++;
         
     }
