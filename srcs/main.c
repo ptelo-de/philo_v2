@@ -6,26 +6,13 @@
 /*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:17:23 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/29 18:10:33 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:58:54 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void    initial_clean(t_info *table)
-{
-    table->forks = NULL;
-    table->nbr_of_meals = 0;
-    table->nbr_philos = 0;
-    table->philos = NULL;
-    table->start_time = 0;
-    table->time_to_die = 0;
-    table->time_to_eat = 0;
-    table->time_to_sleep = 0;
-    table->time_to_think = 0;
-    table->monitor_id = 0;
-    table->Discontinue = 0;
-}
+
 
 int check_args(int argc, char *argv[])
 {
@@ -57,7 +44,7 @@ int main(int argc, char *argv[])
         printf("ERROR: Wrong number of elements\n");
         return (0); // nao podes usar o exit
     }
-    initial_clean(&table);
+	memset(&table, 0, sizeof(t_info));
     if (init_table(argc, &table, argv))
             return (1);
 
@@ -182,9 +169,4 @@ Core concepts:
   p5 (5, 4) 
   p6 (5, 6) pn.2 'e mutavel'    
 */
-// 0//p1 (1, 6)(fork_1, fork_2) p1.2 'e mutavel
-// 1//p2 (2, 1)
-// 2//p3 (3, 2)
-// 3//p4 (4, 3)
-//   p5 (5, 4) 
-//   p6 (6, 5) pn.2 'e mutavel'    
+  

@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:26:28 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/29 16:59:44 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:16:37 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,12 @@ int	ft_usleep(size_t millisec)
 	size_t	start;
 
 	start = my_getime();
-	while ((my_getime() - start) < millisec) 
+	while ((my_getime() - start) < millisec)
+	{
+		// is_Discontinue(table)
+		// 	break;
 		usleep(500);
+	} 
 	return (0);
 }
 

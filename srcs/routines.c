@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:36:55 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/30 20:54:31 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:29:36 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,21 @@ void    eat_with_forks(t_philo *philo)
         my_log("has taken a fork", philo->id, philo->table);
     }
     my_log("is eating", philo->id, philo->table);
-    pthread_mutex_lock(&philo->table->checker);
+   pthread_mutex_lock(&philo->table->checker);
     philo->time_last_meal = my_getime() - philo->table->start_time - philo->time_last_meal;
     philo->meals_eaten++;
-    pthread_mutex_unlock(&philo->table->checker);
+   pthread_mutex_unlock(&philo->table->checker);
     ft_usleep(philo->table->time_to_eat);
-    if (philo->id % 2 != 0)
-    {
+   if (philo->id % 2 != 0)
+   {
         pthread_mutex_unlock(philo->fork_two);
         pthread_mutex_unlock(philo->fork_one);
-    }
-    else
-    {
+   }
+   else
+   {
         pthread_mutex_unlock(philo->fork_one);
         pthread_mutex_unlock(philo->fork_two);
-    }
+   }
     
 }
 
@@ -52,15 +52,8 @@ void    *philo_routine(void *arg)
     t_philo *philo;
     philo = (t_philo *)arg;
     
-    while (1)
+    while (!is_Discontinue(philo->table))
     {
-        pthread_mutex_lock(&philo->table->checker);
-        if (philo->table->Discontinue)
-        {
-            pthread_mutex_unlock(&philo->table->checker);
-            return(NULL);
-        }
-        pthread_mutex_unlock(&philo->table->checker);
         eat_with_forks(philo);
         my_log("is sleeping", philo->id, philo->table);
         ft_usleep(philo->table->time_to_sleep);
@@ -68,6 +61,19 @@ void    *philo_routine(void *arg)
         ft_usleep(philo->table->time_to_think);
     }
     return (NULL);
+}
+
+
+int is_Discontinue(t_info *table)
+{
+    int     condition;
+
+    condition = 0;
+    pthread_mutex_lock(&table->checker);
+    if (table->Discontinue)
+        condition = 1;
+    pthread_mutex_unlock(&table->checker);
+    return (condition);
 }
 
 void    *monitor_routine(void *arg) //check with margarida
@@ -79,9 +85,11 @@ void    *monitor_routine(void *arg) //check with margarida
     table = (t_info *)arg;
 
     all_eaten = 0;
-    while (!table->Discontinue)
+    // while (!table->Discontinue)
+    while (!is_Discontinue(table))
     {
-    pthread_mutex_lock(&table->checker);
+        
+        pthread_mutex_lock(&table->checker);
         i = 0;
         while (i < table->nbr_philos)
         {
@@ -96,13 +104,13 @@ void    *monitor_routine(void *arg) //check with margarida
                 all_eaten++;
             i++;  
         }  
-        if (all_eaten == table->nbr_of_meals)
+        if (all_eaten == table->nbr_philos)
         {
             table->Discontinue = 1;
             pthread_mutex_unlock(&table->checker);
             return (NULL);
         }
-    pthread_mutex_unlock(&table->checker);
+        pthread_mutex_unlock(&table->checker);
     }
     return (NULL);
 }
@@ -124,7 +132,9 @@ void my_log(char *str, int  idx, t_info *table)
 {
     if (!ft_strncmp("died", str, 4))
     {
+        pthread_mutex_lock(&table->checker);
         printf("%lu %d died\n", my_getime() - table->start_time, idx);
+        pthread_mutex_unlock(&table->checker);
         return;
     }
     pthread_mutex_lock(&table->checker);

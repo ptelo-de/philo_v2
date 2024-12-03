@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:24:20 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/30 18:25:03 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:46:07 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,18 @@ int forks_init(t_info *table)
 	int i;
 
     table->forks = (pthread_mutex_t *)ft_calloc(table->nbr_philos, sizeof(pthread_mutex_t));
-    if(!table->forks)
+    if(!table->forks) //esta condicao tem de estar num while para dar free 
     {
         return (1);   
     }
 	i = 0;
 	while (i < table->nbr_philos)
 	{
-	    if (pthread_mutex_init(&table->forks[i], NULL) != 0) 
+	    if (pthread_mutex_init(&table->forks[i], NULL) != 0)  //esta condicao tem de estar num while para dar free e destroy
 			return (1);
 		i++;
     }
-    if (pthread_mutex_init(&table->checker, NULL) != 0) 
+    if (pthread_mutex_init(&table->checker, NULL) != 0) //esta condicao tem de estar num while para dar free  e destroy
 			return (1);
 	return (0);
 }
@@ -124,7 +124,7 @@ int init_thread(t_info *table)
     while (i < table->nbr_philos)
     {
         test = pthread_create(&table->philos[i].theread_id, NULL, &philo_routine, &table->philos[i]);
-        printf("thread create: %u\n", test);
+        //printf("thread create: %u\n", test);
         if (test != 0) 
         {
             free_table(table);

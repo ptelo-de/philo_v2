@@ -6,7 +6,7 @@
 /*   By: ptelo-de <ptelo-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:10:12 by ptelo-de          #+#    #+#             */
-/*   Updated: 2024/11/30 18:09:44 by ptelo-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:04:36 by ptelo-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void    *philo_routine(void	*arg);
 void    *monitor_routine(void	*arg);
 void	my_log(char *str, int  idx, t_info *table);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int is_Discontinue(t_info *table);
 
 //main.c
 int check_args(int argc, char *argv[]);
